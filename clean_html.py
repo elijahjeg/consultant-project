@@ -78,7 +78,7 @@ def findClosingTag(lines, tag):
 
 def write(html):
     """Shorthand function for writing the HTML to a file."""
-    with open('test/cleaned.html', 'w') as cleaned:
+    with open('cleaned.html', 'w') as cleaned:
         cleaned.write(html)
 
 def unwrapElements(lines, pattern, classes):
