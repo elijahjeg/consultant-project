@@ -27,6 +27,11 @@ def removeStyles(messyTxt):
     stylePattern = r'(<\s*\w+[^>]*?)\s*(style|id)\s*=\s*"[^"]*"([^>]*>)' # Matches <element style="...">
     return re.sub(stylePattern, r"\1\3", messyTxt)
 
+def removeSpans(messyTxt):
+    """Removes all span elements from the HTML with re.sub(), keeping the content inside the span."""
+    spanPattern = r'<\s*span[^>]*>(.*?)<\s*/\s*span\s*>'
+    return re.sub(spanPattern, r"\1", messyTxt, flags=re.DOTALL)
+
 def filterClasses(messyTxt, classes):
     """Filters the classes so that only the valid classes stay, if none of the classes are valid remove the attribute all together."""
     # Matches any element 
@@ -164,6 +169,7 @@ def cleanHtml(messyTxt, cssTxt):
 
     pattern = re.compile(fr'<\s*({"|".join(CONTAINERS)})\s*([^>]+)?>')
     messyTxt = removeStyles(messyTxt)
+    messyTxt = removeSpans(messyTxt)
     messyTxt = filterClasses(messyTxt, classes)
     lines = messyTxt.splitlines()
     unwrapElements(lines, pattern, classes)
