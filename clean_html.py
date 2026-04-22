@@ -65,14 +65,15 @@ def findClosingTag(lines, tag):
     depth = 0
 
     for i, line in enumerate(lines):
-        for match in pattern.finditer(line):
-            if match.group(1):
-                if depth == 0:
-                    return i, match
+        if line is not None:
+            for match in pattern.finditer(line):
+                if match.group(1):
+                    if depth == 0:
+                        return i, match
+                    else:
+                        depth -= 1
                 else:
-                    depth -= 1
-            else:
-                depth += 1
+                    depth += 1
 
 
 def write(html):
@@ -122,8 +123,7 @@ def unwrapElements(lines, pattern, classes):
         else:
             intersctedClasses = None
             
-
-        matchHtml = "\n".join(lines[i:lastLineIndex+indexOffset+1])
+        matchHtml = "\n".join(line for line in lines[i:lastLineIndex+indexOffset+1] if line is not None)
         soup = BeautifulSoup(matchHtml, "html.parser")
         children = soup.find(match.group(1)).contents
 
