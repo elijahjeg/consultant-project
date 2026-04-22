@@ -24,8 +24,8 @@ def getClassList(string):
 
 def removeStyles(messyTxt):
     """Removes the style attribute completely from all elements with re.sub()"""
-    stylePattern = r'(<\s*\w+[^>]*?)\s*style\s*=\s*"[^"]*"([^>]*>)' # Matches <element style="...">
-    return re.sub(stylePattern, r"\1\2", messyTxt)
+    stylePattern = r'(<\s*\w+[^>]*?)\s*(style|id)\s*=\s*"[^"]*"([^>]*>)' # Matches <element style="...">
+    return re.sub(stylePattern, r"\1\3", messyTxt)
 
 def filterClasses(messyTxt, classes):
     """Filters the classes so that only the valid classes stay, if none of the classes are valid remove the attribute all together."""
