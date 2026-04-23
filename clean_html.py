@@ -1,7 +1,5 @@
 import re
-from bs4 import BeautifulSoup, Tag
-from bs4.element import NavigableString
-from lxml import etree
+from bs4 import BeautifulSoup
 
 CONTAINERS = (
     "div",
@@ -136,7 +134,7 @@ def unwrapElements(lines, pattern, classes):
 
         # Loop over the children and count the number of non-empty strings and elements, if there is more than one, we shouldn't unwrap the element
         for child in children:
-            if isinstance(child, NavigableString):
+            if isinstance(child, str):
                 if not child.strip():
                     continue
             count += 1
